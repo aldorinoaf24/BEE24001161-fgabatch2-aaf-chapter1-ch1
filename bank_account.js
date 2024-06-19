@@ -10,6 +10,10 @@ class BankAccount {
     }
 
     static withdraw(amount) {
+        if (amount > this.balance) {
+            alert(`Withdrawal amount exceeds the current balance. Your balance is ${this.balance}.`);
+            return this.balance;
+        }
         this.balance = kurangiSaldo(this.balance, amount);
         return this.balance;
     }
@@ -45,8 +49,8 @@ function init(startingBalance, typeOperation) {
         saldo = BankAccount.deposit(deposit);
     } else if (typeOperation === "withdraw") {
         let withdraw = queries("Enter amount to withdraw", true);
-        if (isNaN(withdraw) || withdraw < 0 || withdraw > saldo) {
-            alert(`Please enter a number, a positive number, or a number less than your balance. Your balance is ${saldo}.`);
+        if (isNaN(withdraw) || withdraw < 0) {
+            alert("Please enter a number or a positive number.");
             return init(saldo, typeOperation);
         }
         saldo = BankAccount.withdraw(withdraw);
